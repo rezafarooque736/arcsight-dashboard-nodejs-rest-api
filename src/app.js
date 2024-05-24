@@ -22,7 +22,7 @@ app.use(urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 
 // routes import
-import dashboardRouter from "./routes/dashboard.routes.js";
+import dashboardRouter from "./routes/arcsightMonitoring.routes.js";
 
 // routes declaration
 app.use("/api/v1/dashboard", dashboardRouter);

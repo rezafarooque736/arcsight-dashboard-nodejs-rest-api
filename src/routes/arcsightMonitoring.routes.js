@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCurrentArcsightData } from "../controllers/dashboard.controllers.js";
+import { getCurrentArcsightData } from "../controllers/arcsightMonitoring.controllers.js";
 
 const dashboardRouter = Router();
 
