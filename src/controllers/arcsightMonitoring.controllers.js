@@ -5,6 +5,7 @@ import https from "https";
 import fetch from "node-fetch";
 import generateArcsightToken from "../utils/generate-arcsight-token.js";
 import { config } from "../config/config.js";
+import { getLast7DaysAverage, insertData } from "../utils/monitoring-data.js";
 
 const getCurrentArcsightData = asyncHandler(async (req, res) => {
   const { resource_id } = req.params;
@@ -13,7 +14,6 @@ const getCurrentArcsightData = asyncHandler(async (req, res) => {
 
   // generate arcsight token
   const token = await generateArcsightToken();
-  console.log({ token, time: new Date().toLocaleString() });
 
   // Create an HTTPS agent that ignores SSL certificate errors
   const agent = new https.Agent({
@@ -43,8 +43,8 @@ const getCurrentArcsightData = asyncHandler(async (req, res) => {
     const respData = await resp.json();
 
     let graphDesc;
+
     // data for graph description
-    console.log(respData?.name);
     if (respData?.name === "All_Policy status of last 24h") {
       const result = respData.data?.rows.reduce(
         (acc, { value: [policy, count, status] }) => {
@@ -64,6 +64,18 @@ const getCurrentArcsightData = asyncHandler(async (req, res) => {
         {}
       );
       graphDesc = Object.values(result);
+
+      // Function to fetching data and storage
+      const fetchDataAndStore = async () => {
+        for (const { policy, passed, alerted, blocked } of graphDesc) {
+          await insertData(policy, passed, alerted, blocked);
+
+          const weeklyAverage = await getLast7DaysAverage(policy);
+          console.log(`Weekly Average for ${policy}:`, weeklyAverage);
+        }
+      };
+
+      fetchDataAndStore();
     } else {
       graphDesc = respData.data?.rows.map((item) => ({
         policy: item.value[0],
@@ -73,7 +85,9 @@ const getCurrentArcsightData = asyncHandler(async (req, res) => {
 
     const data = {
       name: respData.name,
-      data: respData.data,
+      timestamp: respData.data.timestamp,
+      startTimestamp: respData.data.startTimestamp,
+      endTimestamp: respData.data.endTimestamp,
       graphDesc,
     };
 
