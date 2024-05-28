@@ -30,7 +30,7 @@ const arcsightMonitoringSchema = new Schema(
 
 arcsightMonitoringSchema.index(
   { createdAt: 1 },
-  { expireAfterSeconds: 7 * 24 * 60 * 60 }
+  { expireAfterSeconds: 7 * 24 * 60 * 60 } //7 days in seconds
 );
 
 export const ArcsightMonitoring =

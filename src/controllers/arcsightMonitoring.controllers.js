@@ -42,9 +42,9 @@ const getCurrentArcsightData = asyncHandler(async (req, res) => {
 
     const respData = await resp.json();
 
-    let graphDesc;
+    let chartDesc;
 
-    // data for graph description
+    // data for chart description
     if (respData?.name === "All_Policy status of last 24h") {
       const result = respData.data?.rows.reduce(
         (acc, { value: [policy, count, status] }) => {
@@ -63,11 +63,11 @@ const getCurrentArcsightData = asyncHandler(async (req, res) => {
         },
         {}
       );
-      graphDesc = Object.values(result);
+      chartDesc = Object.values(result);
 
       // Function to fetching data and storage
       const fetchDataAndStore = async () => {
-        for (const { policy, passed, alerted, blocked } of graphDesc) {
+        for (const { policy, passed, alerted, blocked } of chartDesc) {
           await insertData(policy, passed, alerted, blocked);
 
           const weeklyAverage = await getLast7DaysAverage(policy);
@@ -77,7 +77,7 @@ const getCurrentArcsightData = asyncHandler(async (req, res) => {
 
       fetchDataAndStore();
     } else {
-      graphDesc = respData.data?.rows.map((item) => ({
+      chartDesc = respData.data?.rows.map((item) => ({
         policy: item.value[0],
         total: parseInt(item.value[1]),
       }));
@@ -88,7 +88,7 @@ const getCurrentArcsightData = asyncHandler(async (req, res) => {
       timestamp: respData.data.timestamp,
       startTimestamp: respData.data.startTimestamp,
       endTimestamp: respData.data.endTimestamp,
-      graphDesc,
+      chartDesc,
     };
 
     return res
