@@ -4,7 +4,7 @@ import { getCurrentArcsightData } from "../controllers/arcsightMonitoring.contro
 const dashboardRouter = Router();
 
 dashboardRouter
-  .route("/detect-api/rest/queryviewers/:resource_id")
+  .route("/detect-api/rest/queryviewers")
   .get(getCurrentArcsightData);
 
 export default dashboardRouter;

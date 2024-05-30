@@ -1,6 +1,7 @@
 import express, { urlencoded } from "express";
 import cors from "cors";
 import { config } from "./config/config.js";
+import "./utils/cron-shedular.js";
 
 const app = express();
 
