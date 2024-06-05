@@ -2,7 +2,7 @@
 
 ## Introduction:
 
-This is a dashboard portal reast api in node, express.js for Diffreent services of RailTel Coporation of India Ltd. like arcsight, hpsm, etc.
+This is a dashboard portal frontend in Next.js backend in Node.js, for different services of RailTel Coporation of India Ltd. like arcsight, hpsm, etc..
 
 ### [frontend next.js github link](https://github.com/rezafarooque736/arcsight-dashboard)
 
