@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { getCurrentArcsightData } from "../controllers/arcsightMonitoring.controllers.js";
 
-const dashboardRouter = Router();
+const arcsightDashboardRouter = Router();
 
-dashboardRouter
+arcsightDashboardRouter
   .route("/detect-api/rest/queryviewers")
   .get(getCurrentArcsightData);
 
-export default dashboardRouter;
+export default arcsightDashboardRouter;

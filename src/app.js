@@ -23,9 +23,11 @@ app.use(urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 
 // routes import
-import dashboardRouter from "./routes/arcsightMonitoring.routes.js";
+import arcsightDashboardRouter from "./routes/arcsightMonitoring.routes.js";
+import hpsmMonitoringDashboard from "./routes/hpsmMonitoring.routes.js";
 
 // routes declaration
-app.use("/api/v1/dashboard", dashboardRouter);
+app.use("/api/v1/dashboard/arcsight", arcsightDashboardRouter);
+app.use("/api/v1/dashboard/hpsm", hpsmMonitoringDashboard);
 
 export default app;

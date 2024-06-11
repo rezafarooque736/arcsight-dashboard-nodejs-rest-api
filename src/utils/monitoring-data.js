@@ -4,6 +4,7 @@ import generateArcsightToken from "./generate-arcsight-token.js";
 import https from "https";
 import fetch from "node-fetch";
 import { calculateAvgPct } from "./index.js";
+import ApiError from "./api-error.js";
 
 // Function to insert data into the mongoose database
 export const insertData = async (policy, passed, alerted, blocked) => {
