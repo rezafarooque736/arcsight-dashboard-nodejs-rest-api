@@ -62,24 +62,6 @@ export const getCurrentHpsmData = asyncHandler(async (req, res) => {
           regionList = new Set(regionList).add(Region);
           serviceList = new Set(serviceList).add(Service);
           serviceTypeList = new Set(serviceTypeList).add(ServiceType);
-
-          switch (Priority) {
-            case "1":
-              Priority = "Critical";
-              break;
-            case "2":
-              Priority = "High";
-              break;
-            case "3":
-              Priority = "Average";
-              break;
-            case "4":
-              Priority = "Low";
-              break;
-            default:
-              Priority = "SR";
-              break;
-          }
           return {
             IncidentID,
             Title,
@@ -139,14 +121,23 @@ export const getCurrentHpsmData = asyncHandler(async (req, res) => {
 
     const assigneeList = Object.keys(assigneeDetails).map((item) => ({
       label: item,
+      value: item,
     }));
     const subServiceList = Object.keys(countsBySubService).map((item) => ({
       label: item,
+      value: item,
     }));
-    regionList = Array.from(regionList).map((item) => ({ label: item }));
-    serviceList = Array.from(serviceList).map((item) => ({ label: item }));
+    regionList = Array.from(regionList).map((item) => ({
+      label: item,
+      value: item,
+    }));
+    serviceList = Array.from(serviceList).map((item) => ({
+      label: item,
+      value: item,
+    }));
     serviceTypeList = Array.from(serviceTypeList).map((item) => ({
       label: item,
+      value: item,
     }));
 
     const data = {
