@@ -7,7 +7,12 @@ import { calculateAvgPct } from "./index.js";
 import ApiError from "./api-error.js";
 
 // Function to insert data into the mongoose database
-export const insertData = async (policy, passed, alerted, blocked) => {
+export const insertDataWebApplicationSecurity = async (
+  policy,
+  passed,
+  alerted,
+  blocked
+) => {
   await ArcsightMonitoring.create({
     policy,
     passed,
@@ -17,7 +22,7 @@ export const insertData = async (policy, passed, alerted, blocked) => {
 };
 
 // Function to get average of last 7 days for a policy
-export const getLast7DaysAverage = async (policy) => {
+export const getLast7DaysAverageWebApplicationSecurity = async (policy) => {
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
@@ -44,11 +49,11 @@ export const getLast7DaysAverage = async (policy) => {
 };
 
 // store data in database
-export const storeData = async (chartDesc) => {
+export const storeDataWebApplicationSecurity = async (chartDesc) => {
   try {
     // Store the data
     for (const { policy, passed, alerted, blocked } of chartDesc) {
-      await insertData(policy, passed, alerted, blocked);
+      await insertDataWebApplicationSecurity(policy, passed, alerted, blocked);
     }
   } catch (error) {
     console.error("Error storing data:", error);
@@ -57,7 +62,7 @@ export const storeData = async (chartDesc) => {
 };
 
 // fetch data from arcsight
-export const fetchData = async () => {
+export const fetchDataWebApplicationSecurity = async () => {
   let token, resp, respData, chartDesc;
 
   try {
@@ -128,7 +133,7 @@ export const fetchData = async () => {
     // Compute averages and prepare chart description
     for (const item of chartDesc) {
       const { passed_avg, alerted_avg, blocked_avg } =
-        await getLast7DaysAverage(item.policy);
+        await getLast7DaysAverageWebApplicationSecurity(item.policy);
 
       // add passed_avg, passedavg_pct, alerted_avg, alerted_avg_pct, blocked_avg, blocked_avg_pct to chartDesc
       item.passed_avg = passed_avg;
