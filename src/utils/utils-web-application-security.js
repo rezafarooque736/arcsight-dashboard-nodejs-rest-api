@@ -78,7 +78,7 @@ export const fetchDataWebApplicationSecurity = async () => {
 
     // Fetch data from Arcsight
     resp = await fetch(
-      `https://${config.ARCSIGHT_IP}:${config.ARCSIGHT_PORT}/detect-api/rest/queryviewers/${process.env.RESOURCE_ID_ALL_POLICY_STATUS_OF_LAST_24H}`,
+      `https://${config.ARCSIGHT_IP}:${config.ARCSIGHT_PORT}/detect-api/rest/queryviewers/${config.RESOURCE_ID_ALL_POLICY_STATUS_OF_LAST_24H}`,
       {
         agent,
         method: "GET",
