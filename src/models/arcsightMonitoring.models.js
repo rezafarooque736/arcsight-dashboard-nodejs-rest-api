@@ -5,7 +5,6 @@ const arcsightMonitoringSchema = new Schema({
     type: Date,
     required: true,
     default: Date.now,
-    index: true,
   },
   policy: {
     type: String,
@@ -24,11 +23,6 @@ const arcsightMonitoringSchema = new Schema({
     default: 0,
   },
 });
-
-arcsightMonitoringSchema.index(
-  { createdAt: 1 },
-  { expireAfterSeconds: 7 * 24 * 60 * 60 } //7 days in seconds
-);
 
 export const ArcsightMonitoring =
   mongoose.models.ArcsightMonitoring ||

@@ -61,6 +61,18 @@ export const storeDataWebApplicationSecurity = async (chartDesc) => {
   }
 };
 
+export const deleteDataOlderThan7Days = async () => {
+  try {
+    // Delete data older than 7 days
+    await ArcsightMonitoring.deleteMany({
+      createdAt: { $lt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
+    });
+  } catch (error) {
+    console.error("Error deleting data:", error);
+    throw new ApiError(500, "Error deleting data", error.message);
+  }
+};
+
 // fetch data from arcsight
 export const fetchDataWebApplicationSecurity = async () => {
   let token, resp, respData, chartDesc;
@@ -135,7 +147,7 @@ export const fetchDataWebApplicationSecurity = async () => {
       const { passed_avg, alerted_avg, blocked_avg } =
         await getLast7DaysAverageWebApplicationSecurity(item.policy);
 
-      // add passed_avg, passedavg_pct, alerted_avg, alerted_avg_pct, blocked_avg, blocked_avg_pct to chartDesc
+      // add passed_avg, passed_avg_pct, alerted_avg, alerted_avg_pct, blocked_avg, blocked_avg_pct to chartDesc
       item.passed_avg = passed_avg;
       item.passed_avg_pct = calculateAvgPct(item.passed, passed_avg);
       item.alerted_avg = alerted_avg;
