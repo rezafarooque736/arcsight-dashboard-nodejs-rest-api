@@ -29,12 +29,16 @@ app.use(cookieParser());
 // routes import
 import arcsightDashboardRouter from "./routes/arcsightMonitoring.routes.js";
 import hpsmMonitoringDashboard from "./routes/hpsmMonitoring.routes.js";
+import userRouter from "./routes/user.routes.js";
 
 // routes declaration
 app.use(
   "/api/v1/dashboard/arcsight/detect-api/rest/queryviewers",
   arcsightDashboardRouter
 );
+
 app.use("/api/v1/dashboard/hpsm", hpsmMonitoringDashboard);
+
+app.use("/api/v1/users", userRouter);
 
 export default app;
