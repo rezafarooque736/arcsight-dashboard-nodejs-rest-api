@@ -16,6 +16,10 @@ const _config = {
   PALO_ALTO: process.env.PALO_ALTO,
   VPN_F5_BigIP: process.env.VPN_F5_BigIP,
   RESPECT_TO_DEVICE_PRODUCT: process.env.RESPECT_TO_DEVICE_PRODUCT,
+  ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
+  ACCESS_TOKEN_EXPIRES_IN: process.env.ACCESS_TOKEN_EXPIRES_IN,
+  REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
+  REFRESH_TOKEN_EXPIRES_IN: process.env.REFRESH_TOKEN_EXPIRES_IN,
 };
 
 export const config = Object.freeze(_config);

@@ -1,6 +1,7 @@
 import express, { urlencoded } from "express";
 import cors from "cors";
 import { config } from "./config/config.js";
+import cookieParser from "cookie-parser";
 import "./utils/cron-shedular.js";
 
 const app = express();
@@ -21,6 +22,9 @@ app.use(urlencoded({ extended: true, limit: "16kb" }));
 
 // allow storage public files like images, favicons, etc.
 app.use(express.static("public"));
+
+// parse cookies
+app.use(cookieParser());
 
 // routes import
 import arcsightDashboardRouter from "./routes/arcsightMonitoring.routes.js";
