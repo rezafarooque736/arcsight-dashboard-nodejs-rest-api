@@ -30,6 +30,7 @@ app.use(cookieParser());
 import arcsightDashboardRouter from "./routes/arcsightMonitoring.routes.js";
 import hpsmMonitoringDashboard from "./routes/hpsmMonitoring.routes.js";
 import userRouter from "./routes/user.routes.js";
+import { errorHandler } from "./utils/api-error.js";
 
 // routes declaration
 app.use(
@@ -40,5 +41,8 @@ app.use(
 app.use("/api/v1/dashboard/hpsm", hpsmMonitoringDashboard);
 
 app.use("/api/v1/users", userRouter);
+
+// Use the error handling middleware
+app.use(errorHandler);
 
 export default app;
