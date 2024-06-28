@@ -6,26 +6,27 @@ import {
   get_WAF_F5_ASM_SuspiciousAddressList,
   get_device_product_SuspiciousAddressList,
 } from "../controllers/arcsightMonitoring.controllers.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const arcsightDashboardRouter = Router();
 
 arcsightDashboardRouter
   .route("/web-application-security")
-  .get(getCurrentArcsightData);
+  .get(verifyJWT, getCurrentArcsightData);
 
 arcsightDashboardRouter
   .route("/waf-f5-asm")
-  .get(get_WAF_F5_ASM_SuspiciousAddressList);
+  .get(verifyJWT, get_WAF_F5_ASM_SuspiciousAddressList);
 
 arcsightDashboardRouter
   .route("/vpn-f5-bigIP")
-  .get(get_VPN_F5_BIGIP_SuspiciousAddressList);
+  .get(verifyJWT, get_VPN_F5_BIGIP_SuspiciousAddressList);
 
 arcsightDashboardRouter
   .route("/palo-alto")
-  .get(get_PALO_ALTO_SuspiciousAddressList);
+  .get(verifyJWT, get_PALO_ALTO_SuspiciousAddressList);
 
 arcsightDashboardRouter
   .route("/device-product")
-  .get(get_device_product_SuspiciousAddressList);
+  .get(verifyJWT, get_device_product_SuspiciousAddressList);
 export default arcsightDashboardRouter;
