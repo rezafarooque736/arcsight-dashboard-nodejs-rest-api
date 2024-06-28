@@ -68,7 +68,7 @@ export const loginUser = asyncHandler(async (req, res) => {
   if (!user) throw new ApiError(404, "User does not exist");
 
   const isPasswordValid = await user.isPasswordCorrect(password);
-  if (!isPasswordValid) throw new ApiError(401, "Invalid user credentials");
+  if (!isPasswordValid) throw new ApiError(401, "Invalid user password");
 
   // 4. generate access and refresh tokens
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
@@ -82,7 +82,8 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production", // Set to true if in production
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
   };
 
   return res
@@ -111,7 +112,8 @@ export const logoutUser = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production", // Set to true if in production
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
   };
 
   return res
@@ -142,9 +144,9 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
 
     const options = {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production", // Set to true if in production
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
     };
-
     const { accessToken, newRefreshToken } =
       await generateAccessAndRefreshTokens(user._id);
 
